@@ -1,0 +1,35 @@
+# Node modules (if using npm for development)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+.temp/
+
+# Build artifacts (if added later)
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+
+# Chrome extension temporary files
+*.pem
+*.crx
+*.zip

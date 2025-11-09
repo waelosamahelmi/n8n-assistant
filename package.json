@@ -1,0 +1,30 @@
+{
+  "name": "helmies-n8n-assistant",
+  "version": "1.0.0",
+  "description": "AI-powered Chrome extension for n8n workflow automation with OpenRouter integration - by Helmies.fi",
+  "scripts": {
+    "dev": "echo 'Load extension in Chrome from chrome://extensions/'",
+    "build": "echo 'Extension is ready to load - no build step needed'",
+    "icons": "echo 'Open generate-icons.html to create icon files'"
+  },
+  "keywords": [
+    "n8n",
+    "chrome-extension",
+    "ai",
+    "openrouter",
+    "workflow",
+    "automation",
+    "chatbot",
+    "assistant"
+  ],
+  "author": "Helmies.fi <https://helmies.fi>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/waelosamahelmi/helmies-n8n-assistant"
+  },
+  "bugs": {
+    "url": "https://github.com/waelosamahelmi/helmies-n8n-assistant/issues"
+  },
+  "homepage": "https://helmies.fi"
+}

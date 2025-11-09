@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Helmies n8n Assistant - Settings</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      background: #f5f5f5;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      color: #333;
+      margin-top: 0;
+    }
+    
+    .section {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .section:last-child {
+      border-bottom: none;
+    }
+    
+    h2 {
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #666;
+      font-weight: 500;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+    
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    button:hover {
+      background: #0056b3;
+    }
+    
+    button.secondary {
+      background: #6c757d;
+      margin-left: 10px;
+    }
+    
+    button.secondary:hover {
+      background: #5a6268;
+    }
+    
+    .status {
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 15px;
+      display: none;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 10px;
+      margin-bottom: 0;
+    }
+    
+    .help-text {
+      font-size: 12px;
+      color: #999;
+      margin-top: -10px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚙️ Helmies n8n Assistant Settings</h1>
+    <p style="color: #999; font-size: 14px; margin-bottom: 20px;">
+      Powered by <a href="https://helmies.fi" target="_blank" style="color: #667eea;">Helmies.fi</a>
+    </p>
+    
+    <div class="section">
+      <h2>OpenRouter Configuration</h2>
+      <label for="openrouterKey">OpenRouter API Key</label>
+      <input type="password" id="openrouterKey" placeholder="sk-or-v1-...">
+      <div class="help-text">Get your API key from <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a></div>
+      
+      <label for="model">AI Model</label>
+      <select id="model">
+        <option value="anthropic/claude-3.5-sonnet">Claude 3.5 Sonnet</option>
+        <option value="anthropic/claude-3-opus">Claude 3 Opus</option>
+        <option value="openai/gpt-4-turbo">GPT-4 Turbo</option>
+        <option value="openai/gpt-4">GPT-4</option>
+        <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo</option>
+        <option value="google/gemini-pro">Gemini Pro</option>
+        <option value="meta-llama/llama-3-70b-instruct">Llama 3 70B</option>
+        <option value="mistralai/mistral-large">Mistral Large</option>
+      </select>
+    </div>
+    
+    <div class="section">
+      <h2>n8n Instance</h2>
+      <label for="instanceUrl">n8n Instance URL</label>
+      <input type="url" id="instanceUrl" placeholder="https://your-n8n-instance.com">
+      <div class="help-text">Example: https://n8n.helmies.fi</div>
+      
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="your@email.com">
+      
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Your n8n password">
+      
+      <div class="checkbox-group">
+        <input type="checkbox" id="stayLoggedIn">
+        <label for="stayLoggedIn" style="margin-bottom: 0;">Stay logged in</label>
+      </div>
+      
+      <button id="loginBtn">Login to n8n</button>
+      <button id="testConnectionBtn" class="secondary">Test Connection</button>
+      <button id="fetchNodesBtn" class="secondary">Fetch nodes.json</button>
+      
+      <div id="loginStatus" class="status"></div>
+    </div>
+    
+    <div class="section">
+      <h2>Custom Instructions (Optional)</h2>
+      <label for="customPrompt">Custom Prompt / Instructions</label>
+      <textarea id="customPrompt" rows="6" placeholder="Add custom instructions or context for the AI assistant..."></textarea>
+      <div class="help-text">You can paste markdown content or custom instructions here</div>
+      
+      <label for="referenceFile">Or paste markdown reference file content:</label>
+      <textarea id="referenceFile" rows="8" placeholder="Paste your markdown reference file content here..."></textarea>
+    </div>
+    
+    <div class="section">
+      <button id="saveBtn">💾 Save All Settings</button>
+      <button id="clearBtn" class="secondary">Clear All Settings</button>
+      <div id="saveStatus" class="status"></div>
+    </div>
+  </div>
+  
+  <script src="settings.js"></script>
+</body>
+</html>
