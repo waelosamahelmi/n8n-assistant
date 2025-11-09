@@ -15,7 +15,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   // Populate form fields
   if (settings.openrouterKey) document.getElementById('openrouterKey').value = settings.openrouterKey;
-  if (settings.model) document.getElementById('model').value = settings.model;
+  if (settings.model) {
+    document.getElementById('model').value = settings.model;
+  } else {
+    // Set default model if none exists
+    document.getElementById('model').value = 'anthropic/claude-3.5-sonnet';
+  }
   if (settings.instanceUrl) document.getElementById('instanceUrl').value = settings.instanceUrl;
   if (settings.email) document.getElementById('email').value = settings.email;
   if (settings.password) document.getElementById('password').value = settings.password;
