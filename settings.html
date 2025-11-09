@@ -143,15 +143,15 @@
       <label for="model">AI Model</label>
       <input type="text" id="model" placeholder="e.g., anthropic/claude-3.5-sonnet">
       <div class="help-text">
-        Enter any OpenRouter model name. Popular models:
+        Enter any OpenRouter model name. <strong>Recommended models:</strong>
         <ul style="font-size: 11px; margin: 5px 0 0 20px; padding: 0;">
-          <li>anthropic/claude-3.5-sonnet (recommended)</li>
-          <li>anthropic/claude-3-opus</li>
-          <li>openai/gpt-4-turbo</li>
-          <li>openai/gpt-4</li>
-          <li>google/gemini-pro</li>
-          <li>meta-llama/llama-3-70b-instruct</li>
+          <li><strong>anthropic/claude-3.5-sonnet</strong> - Best for n8n workflows (recommended)</li>
+          <li><strong>openai/gpt-4-turbo</strong> - Excellent, reliable</li>
+          <li><strong>openai/gpt-4o</strong> - Latest GPT-4 model</li>
+          <li><strong>google/gemini-2.0-flash-exp</strong> - Fast and capable</li>
+          <li>meta-llama/llama-3.3-70b-instruct - Good, but avoid free versions</li>
         </ul>
+        ⚠️ <strong>Avoid free models</strong> (those with ":free" suffix) - they have strict content moderation that often blocks legitimate queries.<br>
         See all models: <a href="https://openrouter.ai/models" target="_blank">openrouter.ai/models</a>
       </div>
     </div>
@@ -178,6 +178,11 @@
       <button id="fetchNodesBtn" class="secondary">Fetch nodes.json</button>
       
       <div id="loginStatus" class="status"></div>
+      
+      <div class="help-text" style="margin-top: 15px;">
+        <strong>Note:</strong> nodes.json can be large (1-5 MB) and will be stored in IndexedDB (unlimited storage). 
+        The assistant will intelligently filter it to only send relevant node information based on your requests.
+      </div>
     </div>
     
     <div class="section">
@@ -197,6 +202,7 @@
     </div>
   </div>
   
+  <script src="storage-helper.js"></script>
   <script src="settings.js"></script>
 </body>
 </html>

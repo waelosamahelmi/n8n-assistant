@@ -216,7 +216,10 @@
 <body>
   <div class="header">
     <h1>🤖 Helmies n8n Assistant</h1>
-    <button class="settings-btn" id="settingsBtn">⚙️ Settings</button>
+    <div>
+      <button class="settings-btn" id="newConversationBtn" style="margin-right: 5px;">🔄 New</button>
+      <button class="settings-btn" id="settingsBtn">⚙️ Settings</button>
+    </div>
   </div>
   
   <div class="status-bar" id="statusBar">
@@ -242,6 +245,7 @@
     </div>
   </div>
   
+  <script src="storage-helper.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

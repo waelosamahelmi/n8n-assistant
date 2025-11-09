@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
     
-    showStatus('loginStatus', 'Fetching nodes.json...', 'success');
+    showStatus('loginStatus', 'Fetching nodes.json... This may take a moment.', 'success');
     
     try {
       const response = await chrome.runtime.sendMessage({
@@ -129,9 +129,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
       
       if (response.success) {
-        // Store nodes.json in local storage
-        await chrome.storage.local.set({ nodesJson: response.data });
-        showStatus('loginStatus', 'Successfully fetched and saved nodes.json!', 'success');
+        // Store nodes.json in IndexedDB (can handle large files)
+        await storeLargeData('nodesJson', response.data);
+        
+        // Calculate size
+        const sizeKB = Math.round(JSON.stringify(response.data).length / 1024);
+        showStatus('loginStatus', `Successfully fetched and saved nodes.json! (${sizeKB} KB stored in IndexedDB)`, 'success');
       } else {
         showStatus('loginStatus', 'Failed to fetch nodes.json: ' + response.error, 'error');
       }

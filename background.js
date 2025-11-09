@@ -32,26 +32,30 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 // Call OpenRouter API
 async function callOpenRouterAPI({ apiKey, model, messages }) {
-  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-      'HTTP-Referer': 'https://helmies.fi',
-      'X-Title': 'Helmies n8n Assistant'
-    },
-    body: JSON.stringify({
-      model: model,
-      messages: messages
-    })
-  });
-  
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error?.message || 'API call failed');
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://helmies.fi',
+        'X-Title': 'Helmies n8n Assistant'
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: messages
+      })
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error?.message || `API error: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    throw error;
   }
-  
-  return await response.json();
 }
 
 // Fetch nodes.json from n8n instance
@@ -63,12 +67,16 @@ async function fetchNodesJson({ instanceUrl, email, password }) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ 
+        emailOrLdapLoginId: email,
+        password: password 
+      }),
       credentials: 'include'
     });
     
     if (!loginResponse.ok) {
-      throw new Error('Login failed');
+      const errorData = await loginResponse.json().catch(() => ({}));
+      throw new Error(errorData.message || 'Login failed');
     }
     
     // Then fetch nodes.json
@@ -94,12 +102,16 @@ async function loginToN8n({ instanceUrl, email, password }) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ 
+        emailOrLdapLoginId: email,
+        password: password 
+      }),
       credentials: 'include'
     });
     
     if (!response.ok) {
-      throw new Error('Login failed');
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || 'Login failed');
     }
     
     const data = await response.json();
